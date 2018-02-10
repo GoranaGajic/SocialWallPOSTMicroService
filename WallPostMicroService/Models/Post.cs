@@ -12,9 +12,10 @@ namespace WallPostMicroService.Models
         public string Text { get; set; }
         public decimal Rating { get; set; }
         public int Views { get; set; }
-        public byte[] Attachment { get; set; }
+        public String Attachment { get; set; }
         public string Location { get; set; }
         public bool Active { get; set; }
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
+        public HashSet<Guid> LikedByUsers { get; set; }
     }
 }

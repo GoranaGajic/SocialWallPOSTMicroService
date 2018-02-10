@@ -59,16 +59,17 @@ namespace WallPostMicroService.Tests.UnitTests
         [Test]
         public void InsertPostSuccess()
         {
+            List<Post> posts = PostDB.GetAllPosts(active);
             Post post = new Post
             {
                 Text = "new post text",
                 Rating = 2.5m,
                 Views = 10,
-                Attachment = Encoding.ASCII.GetBytes("video"),
+                Attachment = "attt",
                 Location = "Novi Sad",
                 Active = true,
-                UserId = "user1"
-            };
+                UserId = postId = posts[0].UserId
+        };
             int oldNumberOfPosts = PostDB.GetAllPosts(active).Count;
             PostDB.InsertPost(post);
             Assert.AreEqual(oldNumberOfPosts + 1, PostDB.GetAllPosts(active).Count);
@@ -77,6 +78,7 @@ namespace WallPostMicroService.Tests.UnitTests
         [Test]
         public void InsertPostFailed()
         {
+
             Post post = new Post
             {
                 Text = "",
@@ -84,7 +86,7 @@ namespace WallPostMicroService.Tests.UnitTests
                 Views = 10,
                 Location = "Novi Sad",
                 Active = true,
-                UserId = "user1"
+                UserId = postId = Guid.NewGuid()
             };
             int oldNumberOfPosts = PostDB.GetAllPosts(active).Count;
             PostDB.InsertPost(post);
@@ -100,7 +102,7 @@ namespace WallPostMicroService.Tests.UnitTests
                 Text = "UpdateText",
                 Rating = 3.5m,
                 Views = 12,
-                Attachment = Encoding.ASCII.GetBytes("update"),
+                Attachment = "sadasd",
                 Location = "Update Location",
                 Active = true
             };
@@ -125,7 +127,7 @@ namespace WallPostMicroService.Tests.UnitTests
                 Attachment = null,
                 Location = "Another update",
                 Active = true,
-                UserId = "user5"
+                UserId = postId = Guid.NewGuid()
             };
             Post updatedPost = PostDB.UpdatePost(post, id);
             Assert.IsNull(updatedPost);
